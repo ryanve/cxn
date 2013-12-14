@@ -1,0 +1,21 @@
+{
+    "name": "cxn",
+    "description": "connection detection module with online/offline events",
+    "version": "0.1.0",
+    "homepage": "https://github.com/ryanve/cxn",
+    "license": "MIT",
+    "author": "Ryan Van Etten",
+    "keywords": ["connection", "offline", "online", "network", "detection", "browser", "ender"],
+    "main": "./cxn.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ryanve/cxn.git"
+    },
+    "devDependencies": {
+        "aok": "~1.7.0",
+        "grunt": "~0.4.1",
+        "grunt-contrib-uglify": "~0.2.4",
+        "grunt-contrib-concat": "~0.3.0",
+        "grunt-contrib-jshint": "~0.7.2"
+    }
+}
