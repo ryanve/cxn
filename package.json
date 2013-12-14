@@ -1,6 +1,6 @@
 {
     "name": "cxn",
-    "description": "connection detection module with online/offline events",
+    "description": "Network connection module with online/offline events",
     "version": "0.1.0",
     "homepage": "https://github.com/ryanve/cxn",
     "license": "MIT",
