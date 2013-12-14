@@ -1,5 +1,5 @@
 /*!
- * cxn 0.1.1+201312141210
+ * cxn 0.1.2+201312141304
  * https://github.com/ryanve/cxn
  * MIT License 2013 Ryan Van Etten
  */
@@ -31,7 +31,7 @@
             return listens ? (win[listen](type, fn, false), true) : false;
         }
       , ok = true
-      , resolve = function(err) { console.log(err); ok = !err; }
+      , resolve = function(err) { ok = !err; }
       , times = 0;
 
     

@@ -25,7 +25,7 @@
             return listens ? (win[listen](type, fn, false), true) : false;
         }
       , ok = true
-      , resolve = function(err) { console.log(err); ok = !err; }
+      , resolve = function(err) { ok = !err; }
       , times = 0;
 
     
