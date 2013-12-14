@@ -7,16 +7,16 @@ $ npm install cxn
 
 ## API ([0.1](../../releases))
 
-#### `cxn.state(fn?)` &rArr; `string`
-#### `cxn.online(fn?)` &rArr; `boolean`
-#### `cxn.offline(fn?)` &rArr; `boolean`
+#### `cxn.online(listener?)` &rArr; `boolean` true if online
+#### `cxn.offline(listener?)` &rArr; `boolean` true if offline
+#### `cxn.state(listener?)` &rArr; `string` 'online' or 'offline' (listens to both)
 #### `cxn.stable()` &rArr; `boolean` true if never offline
 #### `cxn.unstable()` &rArr; `number` times connection state changed
-#### `cxn.lost(fn)` &rArr; `boolean` true on success
-#### `cxn.found(fn)` &rArr; `boolean` true on success
+#### `cxn.lost(listener)` &rArr; `boolean` true on success
+#### `cxn.found(listener)` &rArr; `boolean` true on success
 #### `cxn.duration(since?)` &rArr; `number` ms
-#### `cxn.bandwidth()` &rArr; `number` MB/s
-#### `cxn.metered()` &rArr; `boolean`
+#### `cxn.bandwidth()` &rArr; `number` MB/s (0 if offline)
+#### `cxn.metered()` &rArr; `boolean` true if data usage is metered
 
 ## License
 
