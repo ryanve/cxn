@@ -2,7 +2,7 @@
 #### Network connection JavaScript [module](https://npmjs.org/package/cxn) with online/offline events
 
 ```sh
-npm install cxn
+$ npm install cxn
 ```
 
 ## API ([0.1](../../releases))
