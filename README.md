@@ -18,6 +18,13 @@ $ npm install cxn
 #### `cxn.bandwidth()` &rArr; `number` MB/s (0 if offline)
 #### `cxn.metered()` &rArr; `boolean` true if data usage is metered
 
+## CSS
+#### `html[data-cxn]` reports state
+```css
+[data-cxn~="online"] { background:snow; }
+[data-cxn~="offline"] { background:gray; }
+```
+
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
