@@ -5,7 +5,7 @@
 $ npm install cxn
 ```
 
-## API ([0.2](../../releases))
+## API ([0.3](../../releases))
 
 #### `cxn.online(listener?)` &rArr; `boolean` true if online
 #### `cxn.offline(listener?)` &rArr; `boolean` true if offline
@@ -14,6 +14,9 @@ $ npm install cxn
 #### `cxn.unstable()` &rArr; `number` times connection state changed
 #### `cxn.elapsed()` &rArr; `number` ms since runtime
 #### `cxn.interim()` &rArr; `number` ms at current state
+#### `cxn.gap()` &rArr; `number` ms at current offline state (0 if online)
+#### `cxn.life()` &rArr; `number` ms at current online state (0 if offline)
+#### `cxn.late()` &rArr; `number` ms to first go online, Infinity if never online, 0 if never offline
 #### `cxn.lost(listener)` &rArr; `boolean` true on success
 #### `cxn.found(listener)` &rArr; `boolean` true on success
 #### `cxn.bandwidth()` &rArr; `number` MB/s (0 if offline)
