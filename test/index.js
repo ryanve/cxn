@@ -6,7 +6,7 @@
     aok({ id:'.online', test: cxn.online() === !cxn.offline() });
     aok({ id:'.offline', test: cxn.offline() === !cxn.online() });
     aok({ id:'.stable', test: typeof cxn.stable() == 'boolean' });
-    aok({ id:'.unstable', test: cxn.stable() ? !cxn.unstable() : cxn.unstable() || cxn.offline() });
+    aok({ id:'.unstable', test: cxn.stable() ? !cxn.unstable() : cxn.unstable() });
     aok({ id:'.line', test: typeof cxn.line() == 'boolean' });
     aok({ id:'.lost', test: typeof cxn.lost == 'function' });
     aok({ id:'.found', test: typeof cxn.found == 'function' });

@@ -16,6 +16,8 @@
       , metered = 'metered'
       , offline = 'offline'
       , online = 'online'
+      , stable = 'stable'
+      , unstable = 'unstable'
       , line = 'line'
       , both = function(o, fn) {
             return !!fn(o[0], 0) && !!fn(o[1], 1);
@@ -69,15 +71,15 @@
     /**
      * @return {number} times
      */
-    cxn['unstable'] = function() {
+    cxn[unstable] = function() {
         return times;
     };
     
     /**
-     * @return {boolean} true if never offline
+     * @return {boolean} true if initial state persists
      */
-    cxn['stable'] = function() {
-        return !times && !cxn[offline]();
+    cxn[stable] = function() {
+        return !times;
     };
     
     cxn['elapsed'] = function() {
@@ -89,10 +91,11 @@
     };
     
     function report(e) {
-        var msg = cxn[online]() ? online : offline;
-        e && (since = +new Date);
-        e && times++ && (msg += ' again');
-        server || document.documentElement.setAttribute('data-cxn', msg);
+        if (e) times++, since = +new Date;
+        server || document.documentElement.setAttribute('data-cxn', [
+            cxn[online]() ? online : offline
+          , cxn[stable]() ? stable : unstable
+        ].join(' '));
     }
 
     server || report();
