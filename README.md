@@ -16,7 +16,7 @@ $ npm install cxn
 #### `cxn.interim()` &rArr; `number` ms at current state
 #### `cxn.gap()` &rArr; `number` ms at current offline state (0 if online)
 #### `cxn.life()` &rArr; `number` ms at current online state (0 if offline)
-#### `cxn.late()` &rArr; `number` ms to first go online, Infinity if never online, 0 if never offline
+#### `cxn.late()` &rArr; `number` ms to first go online, Infinity if not yet, 0 if started online
 #### `cxn.lost(listener)` &rArr; `boolean` true on success
 #### `cxn.found(listener)` &rArr; `boolean` true on success
 #### `cxn.bandwidth()` &rArr; `number` MB/s (0 if offline)
