@@ -8,6 +8,7 @@
     aok({ id:'.stable', test: typeof cxn.stable() == 'boolean' });
     aok({ id:'.unstable', test: cxn.stable() ? !cxn.unstable() : cxn.unstable() });
     aok({ id:'.line', test: typeof cxn.line() == 'boolean' });
+    aok({ id:'.late', test: typeof cxn.late() == 'number' });
     aok({ id:'.lost', test: typeof cxn.lost == 'function' });
     aok({ id:'.found', test: typeof cxn.found == 'function' });
 

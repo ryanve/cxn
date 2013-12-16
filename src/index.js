@@ -5,10 +5,11 @@
 
     var start = +new Date
       , since = start
-      , cxn = {}
+      , onLine = 'onLine'
       , server = typeof window == 'undefined'
-      , win = !server && window
       , nav = !server && navigator
+      , late = false === nav[onLine] ? Infinity : 0
+      , win = !server && window
       , listen = 'addEventListener'
       , listens = win && listen in win
       , connection = nav['connection'] || nav['mozConnection'] || false
@@ -27,7 +28,8 @@
         }
       , ok = true
       , resolve = function(err) { ok = !err; }
-      , times = 0;
+      , times = 0
+      , cxn = {};
 
     
     cxn[line] = function(fn) {
@@ -48,7 +50,7 @@
             return i == ok;
         } : function(fn) {
             fn && cxn[event](fn);
-            return (false !== nav['onLine']) == i;
+            return (false !== nav[onLine]) == i;
         };
         return true;
     });
@@ -90,8 +92,16 @@
         return +new Date-since;
     };
     
+    /**
+     * @return {boolean} true if initial state was offline
+     */
+    cxn['late'] = function() {
+        return late;
+    };
+    
     function report(e) {
         if (e) times++, since = +new Date;
+        isFinite(late) || cxn[offline]() || (late = (since-start) || 1);
         server || document.documentElement.setAttribute('data-cxn', [
             cxn[online]() ? online : offline
           , cxn[stable]() ? stable : unstable
