@@ -29,9 +29,9 @@
 
     
     cxn[line] = function(fn) {
-        return on(offline, fn) && on(online, fn);
+        return null == fn ? listens : on(offline, fn) && on(online, fn);
     };
-        
+
     both([offline, online], function(n, i) {
         var event = i ? 'found' : 'lost';
         cxn[event] = win && ('on' + n) in win ? function(fn) {
