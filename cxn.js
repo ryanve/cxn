@@ -1,5 +1,5 @@
 /*!
- * cxn 0.1.2+201312141304
+ * cxn 0.2.0+201312160723
  * https://github.com/ryanve/cxn
  * MIT License 2013 Ryan Van Etten
  */
@@ -22,8 +22,9 @@
       , metered = 'metered'
       , offline = 'offline'
       , online = 'online'
-      , state = 'state'
-      , states = [offline, online]
+      , stable = 'stable'
+      , unstable = 'unstable'
+      , line = 'line'
       , both = function(o, fn) {
             return !!fn(o[0], 0) && !!fn(o[1], 1);
         }
@@ -35,12 +36,11 @@
       , times = 0;
 
     
-    cxn[state] = function(fn) {
-        fn && on(offline, fn) && on(online, fn);
-        return states[cxn[online]() ? 1 : 0];
+    cxn[line] = function(fn) {
+        return null == fn ? listens : on(offline, fn) && on(online, fn);
     };
-        
-    both(states, function(n, i) {
+
+    both([offline, online], function(n, i) {
         var event = i ? 'found' : 'lost';
         cxn[event] = win && ('on' + n) in win ? function(fn) {
             return on(n, fn);
@@ -56,10 +56,6 @@
             fn && cxn[event](fn);
             return (false !== nav['onLine']) == i;
         };
-        //cxn['isO' + n.slice(1)] = function() {
-        //    return (false === nav['onLine']) == i;
-        //};
-        //cxn[n][aware] = listens && ('on' + n) in win;
         return true;
     });
 
@@ -81,32 +77,34 @@
     /**
      * @return {number} times
      */
-    cxn['unstable'] = function() {
+    cxn[unstable] = function() {
         return times;
     };
     
     /**
-     * @return {boolean} true if never offline
+     * @return {boolean} true if initial state persists
      */
-    cxn['stable'] = function() {
-        return !times && !cxn[offline]();
+    cxn[stable] = function() {
+        return !times;
     };
     
-    /**
-     * @return {number} ms
-     */
-    cxn['duration'] = function(ms) {
-        return +new Date - (true === ms ? start : null == ms ? since : +ms);
+    cxn['elapsed'] = function() {
+        return +new Date-start;
+    };
+    
+    cxn['interim'] = function() {
+        return +new Date-since;
     };
     
     function report(e) {
-        var msg = cxn[state]();
-        e && (since = +new Date);
-        e && times++ && (msg += ' again');
-        server || document.documentElement.setAttribute('data-cxn', msg);
+        if (e) times++, since = +new Date;
+        server || document.documentElement.setAttribute('data-cxn', [
+            cxn[online]() ? online : offline
+          , cxn[stable]() ? stable : unstable
+        ].join(' '));
     }
 
     server || report();
-    cxn[state](report);
+    cxn[line](report);
     return cxn;
 }));
