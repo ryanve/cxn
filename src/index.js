@@ -96,7 +96,7 @@
     };
     
     /**
-     * @return {number} time to first go online, Infinity if never online, 0 if never offline
+     * @return {number} ms to first go online, Infinity if not yet, 0 if started online
      */
     cxn['late'] = function() {
         return late;
