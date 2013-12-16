@@ -86,11 +86,12 @@
         return !times && !cxn[offline]();
     };
     
-    /**
-     * @return {number} ms
-     */
-    cxn['duration'] = function(ms) {
-        return +new Date - (true === ms ? start : null == ms ? since : +ms);
+    cxn['elapsed'] = function() {
+        return +new Date-start;
+    };
+    
+    cxn['interim'] = function() {
+        return +new Date-since;
     };
     
     function report(e) {
