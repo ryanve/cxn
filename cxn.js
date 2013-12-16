@@ -1,5 +1,5 @@
 /*!
- * cxn 0.2.0+201312160723
+ * cxn 0.3.0+201312161018
  * https://github.com/ryanve/cxn
  * MIT License 2013 Ryan Van Etten
  */
@@ -11,10 +11,11 @@
 
     var start = +new Date
       , since = start
-      , cxn = {}
+      , onLine = 'onLine'
       , server = typeof window == 'undefined'
-      , win = !server && window
       , nav = !server && navigator
+      , late = false === nav[onLine] ? 1/0 : 0
+      , win = !server && window
       , listen = 'addEventListener'
       , listens = win && listen in win
       , connection = nav['connection'] || nav['mozConnection'] || false
@@ -33,7 +34,8 @@
         }
       , ok = true
       , resolve = function(err) { ok = !err; }
-      , times = 0;
+      , times = 0
+      , cxn = {};
 
     
     cxn[line] = function(fn) {
@@ -54,7 +56,10 @@
             return i == ok;
         } : function(fn) {
             fn && cxn[event](fn);
-            return (false !== nav['onLine']) == i;
+            return (false !== nav[onLine]) == i;
+        };
+        cxn[i ? 'life' : 'gap'] = function() {
+            return cxn[n]() ? (+new Date-since) || 1 : 0;
         };
         return true;
     });
@@ -64,7 +69,7 @@
      */
     cxn[bandwidth] = function() {
         var n = connection;
-        return n && (n = n[bandwidth]) === +n ? n : cxn[offline]() ? 0 : Infinity;
+        return n && (n = n[bandwidth]) === +n ? n : cxn[offline]() ? 0 : 1/0;
     };
     
     /**
@@ -96,8 +101,16 @@
         return +new Date-since;
     };
     
+    /**
+     * @return {number} time to first go online, Infinity if never online, 0 if never offline
+     */
+    cxn['late'] = function() {
+        return late;
+    };
+    
     function report(e) {
         if (e) times++, since = +new Date;
+        if (late == late/0 && cxn[online]()) late = (since-start) || 1;
         server || document.documentElement.setAttribute('data-cxn', [
             cxn[online]() ? online : offline
           , cxn[stable]() ? stable : unstable
