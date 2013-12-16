@@ -93,7 +93,7 @@
     };
     
     /**
-     * @return {boolean} true if initial state was offline
+     * @return {number} time to first go online, Infinity if never online, 0 if never offline
      */
     cxn['late'] = function() {
         return late;
