@@ -10,7 +10,7 @@ $ npm install cxn
 #### `cxn.online(listener?)` &rArr; `boolean` true if online
 #### `cxn.offline(listener?)` &rArr; `boolean` true if offline
 #### `cxn.line(listener?)` &rArr; `boolean` listen to online and offline
-#### `cxn.stable()` &rArr; `boolean` true initial connection state persists
+#### `cxn.stable()` &rArr; `boolean` true if initial connection state persists
 #### `cxn.unstable()` &rArr; `number` times connection state changed
 #### `cxn.elapsed()` &rArr; `number` ms since runtime
 #### `cxn.interim()` &rArr; `number` ms at current state
