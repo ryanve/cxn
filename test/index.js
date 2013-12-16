@@ -5,15 +5,15 @@
     
     aok({ id:'.online', test: cxn.online() === !cxn.offline() });
     aok({ id:'.offline', test: cxn.offline() === !cxn.online() });
-    aok({ id:'.state', test: cxn.state() === (cxn.online() ? 'online' : 'offline') });
     aok({ id:'.stable', test: typeof cxn.stable() == 'boolean' });
     aok({ id:'.unstable', test: cxn.stable() ? !cxn.unstable() : cxn.unstable() || cxn.offline() });
+    aok({ id:'.line', test: typeof cxn.line == 'function' });
     aok({ id:'.lost', test: typeof cxn.lost == 'function' });
     aok({ id:'.found', test: typeof cxn.found == 'function' });
 
-    server ? aok.pass(['state', 'online', 'offline', 'stable', 'unstable'], function(method) {
+    server ? aok.pass(['online', 'offline', 'stable', 'unstable'], function(method) {
         aok.log(method + ': ' + cxn[method]());
-    }) : aok({ 
+    }) : aok({
         id:'[data-cxn]'
       , test: typeof document.documentElement.getAttribute('data-cxn') == 'string' 
     });

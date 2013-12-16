@@ -16,8 +16,7 @@
       , metered = 'metered'
       , offline = 'offline'
       , online = 'online'
-      , state = 'state'
-      , states = [offline, online]
+      , line = 'line'
       , both = function(o, fn) {
             return !!fn(o[0], 0) && !!fn(o[1], 1);
         }
@@ -29,12 +28,11 @@
       , times = 0;
 
     
-    cxn[state] = function(fn) {
-        fn && on(offline, fn) && on(online, fn);
-        return states[cxn[online]() ? 1 : 0];
+    cxn[line] = function(fn) {
+        return on(offline, fn) && on(online, fn);
     };
         
-    both(states, function(n, i) {
+    both([offline, online], function(n, i) {
         var event = i ? 'found' : 'lost';
         cxn[event] = win && ('on' + n) in win ? function(fn) {
             return on(n, fn);
@@ -50,10 +48,6 @@
             fn && cxn[event](fn);
             return (false !== nav['onLine']) == i;
         };
-        //cxn['isO' + n.slice(1)] = function() {
-        //    return (false === nav['onLine']) == i;
-        //};
-        //cxn[n][aware] = listens && ('on' + n) in win;
         return true;
     });
 
@@ -95,13 +89,13 @@
     };
     
     function report(e) {
-        var msg = cxn[state]();
+        var msg = cxn[online]() ? online : offline;
         e && (since = +new Date);
         e && times++ && (msg += ' again');
         server || document.documentElement.setAttribute('data-cxn', msg);
     }
 
     server || report();
-    cxn[state](report);
+    cxn[line](report);
     return cxn;
 }));
