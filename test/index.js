@@ -11,6 +11,10 @@
     aok({ id:'.late', test: typeof cxn.late() == 'number' });
     aok({ id:'.lost', test: typeof cxn.lost == 'function' });
     aok({ id:'.found', test: typeof cxn.found == 'function' });
+    aok({ id:'.elapsed', test: typeof cxn.elapsed() === 'number' });
+    aok({ id:'.interim', test: cxn.interim() <= cxn.elapsed() });
+    aok({ id:'.gap', test: cxn.gap() ? !cxn.life() : 0 === cxn.gap() });
+    aok({ id:'.life', test: cxn.life() ? !cxn.gap() : 0 === cxn.life() });
 
     server ? aok.pass(['online', 'offline', 'stable', 'unstable'], function(method) {
         aok.log(method + ': ' + cxn[method]());

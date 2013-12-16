@@ -52,6 +52,9 @@
             fn && cxn[event](fn);
             return (false !== nav[onLine]) == i;
         };
+        cxn[i ? 'life' : 'gap'] = function() {
+            return cxn[n]() ? (+new Date-since) || 1 : 0;
+        };
         return true;
     });
 
