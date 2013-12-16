@@ -13,8 +13,8 @@
     aok({ id:'.found', test: typeof cxn.found == 'function' });
     aok({ id:'.elapsed', test: typeof cxn.elapsed() === 'number' });
     aok({ id:'.interim', test: cxn.interim() <= cxn.elapsed() });
-    aok({ id:'.gap', test: cxn.gap() ? !cxn.life() : 0 === cxn.gap() });
-    aok({ id:'.life', test: cxn.life() ? !cxn.gap() : 0 === cxn.life() });
+    aok({ id:'.gap', test: cxn.gap() ? cxn.offline() && !cxn.life() : 0 === cxn.gap() });
+    aok({ id:'.life', test: cxn.life() ? cxn.online() && !cxn.gap() : 0 === cxn.life() });
 
     server ? aok.pass(['online', 'offline', 'stable', 'unstable'], function(method) {
         aok.log(method + ': ' + cxn[method]());

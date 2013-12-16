@@ -8,7 +8,7 @@
       , onLine = 'onLine'
       , server = typeof window == 'undefined'
       , nav = !server && navigator
-      , late = false === nav[onLine] ? Infinity : 0
+      , late = false === nav[onLine] ? 1/0 : 0
       , win = !server && window
       , listen = 'addEventListener'
       , listens = win && listen in win
@@ -63,7 +63,7 @@
      */
     cxn[bandwidth] = function() {
         var n = connection;
-        return n && (n = n[bandwidth]) === +n ? n : cxn[offline]() ? 0 : Infinity;
+        return n && (n = n[bandwidth]) === +n ? n : cxn[offline]() ? 0 : 1/0;
     };
     
     /**
@@ -104,7 +104,7 @@
     
     function report(e) {
         if (e) times++, since = +new Date;
-        isFinite(late) || cxn[offline]() || (late = (since-start) || 1);
+        if (late == late/0 && cxn[online]()) late = (since-start) || 1;
         server || document.documentElement.setAttribute('data-cxn', [
             cxn[online]() ? online : offline
           , cxn[stable]() ? stable : unstable
