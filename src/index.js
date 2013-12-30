@@ -3,60 +3,117 @@
     else root[name] = make();
 }(this, 'cxn', function() {
 
-    var start = +new Date
+    var cxn = {}
+      , start = +new Date
       , since = start
+      , times = 0
+      , record = function() {
+            times++;
+            since = +new Date;
+        }
       , onLine = 'onLine'
       , server = typeof window == 'undefined'
       , nav = !server && navigator
       , late = false === nav[onLine] ? 1/0 : 0
       , win = !server && window
+      , doc = !server && document
       , listen = 'addEventListener'
-      , listens = win && listen in win
       , connection = nav['connection'] || nav['mozConnection'] || false
       , bandwidth = 'bandwidth'
       , metered = 'metered'
       , offline = 'offline'
       , online = 'online'
       , stable = 'stable'
-      , unstable = 'unstable'
-      , line = 'line'
-      , both = function(o, fn) {
-            return !!fn(o[0], 0) && !!fn(o[1], 1);
+      , unstable = 'un' + stable
+      , states = [offline, online]
+      , handlers = {}
+      , listeners = 'listeners'
+      , emit = 'emit'
+      , wire = 'wire'
+      , unwire = 'un' + wire
+      , owns = 'hasOwnProperty'
+      , clear = function(a) {
+            a.splice(0, a.length);
         }
-      , on = function(type, fn) {
-            return listens ? (win[listen](type, fn, false), true) : false;
+      , hears = function(event, node) {
+            return !!node && ('on' + event) in node;
         }
+      , on = win ? listen in win ? function(node, type, fn) {
+            node[listen](type, fn, false);
+        } : function(node, type, fn) {
+            node['attachEvent']('on' + type, fn);
+        } : function() {}
       , ok = true
       , resolve = function(err) { ok = !err; }
-      , times = 0
-      , cxn = {};
-
+      , report = function() {
+            server || document.documentElement.setAttribute('data-cxn', [
+                cxn[online]() ? online : offline
+              , cxn[stable]() ? stable : unstable
+            ].join(' '));
+        };
     
-    cxn[line] = function(fn) {
-        return null == fn ? listens : on(offline, fn) && on(online, fn);
+    /**
+     * @param {{length:number}} fns
+     * @param {*=} scope
+     * @param {number} fired
+     */
+    function calls(fns, scope) {
+        for (var i = 0, l = fns && fns.length; i < l;) fns[i++].call(scope);
+        return i;
+    }
+    
+    /**
+     * @param {Array} a
+     * @param {*=} v value to remove
+     * @param {number=} occurrences to remove, works downward, defaults to all
+     */
+    function pull(a, v, occurrences) {
+        occurrences >>= 0;
+        for (var i = a.length; i--;) if (v === a[i] && a.splice(i, 1) && !--occurrences) break;
+    }
+    
+    /**
+     * @param {string} type
+     * @return {Array} active handlers
+     */
+    cxn[listeners] = function(type) {
+        if (null == type) throw new TypeError('@0');
+        return handlers[owns](type) && handlers[type] || (handlers[type] = []);
     };
-
-    both([offline, online], function(n, i) {
-        var event = i ? 'found' : 'lost';
-        cxn[event] = win && ('on' + n) in win ? function(fn) {
-            return on(n, fn);
-        } : function() {
-            return false;
-        };
-        cxn[n] = server ? function() {
-            //stackoverflow.com/a/15271685/770127
-            //seems to work in node.js but needs tests
-            require('dns').resolve('google.com', resolve);
-            return i == ok;
-        } : function(fn) {
-            fn && cxn[event](fn);
-            return (false !== nav[onLine]) == i;
-        };
-        cxn[i ? 'life' : 'gap'] = function() {
-            return cxn[n]() ? (+new Date-since) || 1 : 0;
-        };
-        return true;
-    });
+    
+    /**
+     * @param {string} type
+     * @return {number} fired
+     */
+    cxn[emit] = function(type) {
+        return calls(cxn[listeners](type), cxn);
+    };
+    
+    /**
+     * @param {string|Function} state
+     * @param {(Function|string|number)=} fn or iteration key
+     */
+    cxn[wire] = cxn['line'] = function(state, fn) {
+        // (state, fn) or (fn, state) listens, (fn) listens to both, (state) triggers
+        var either, type = state, i = 2;
+        if (typeof state == 'function') typeof fn == 'string' ? type = fn : either = 1, fn = state;
+        if (typeof state == 'string' && typeof fn != 'function') cxn[emit](state);
+        else while (i--) if (either || states[i] === type) cxn[listeners](states[i]).push(fn);
+        return this;
+    };
+    
+    /**
+     * @param {string|Function} state
+     * @param {(Function|string|number)=} fn or iteration key
+     */
+    cxn[unwire] = cxn['unline'] = function(state, fn) {
+        // (state, fn) or (fn, state) unlistens, (fn) unlistens to both, (state) removes all
+        var either, type = state, i = 2;
+        if (typeof state == 'function') typeof fn == 'string' ? type = fn : either = 1, fn = state;
+        if (typeof state == 'string' && typeof fn != 'function') clear(cxn[listeners](state));
+        else while (i--) if (either || states[i] === type) pull(cxn[listeners](states[i]), fn);
+        return this;
+    };
 
     /**
      * @return {number}
@@ -102,16 +159,33 @@
         return late;
     };
     
-    function report(e) {
-        if (e) times++, since = +new Date;
-        if (late == late/0 && cxn[online]()) late = (since-start) || 1;
-        server || document.documentElement.setAttribute('data-cxn', [
-            cxn[online]() ? online : offline
-          , cxn[stable]() ? stable : unstable
-        ].join(' '));
-    }
+    (function(stack, fn) {
+        for (var i = 2; i--;) fn(stack[i], i);
+    })(states, function(type, i) {
+        function master() {
+            record();
+            i && late == late/0 && (late = (since-start) || 1);
+            cxn[emit](type);
+        }
+        if (!server) {
+            if (hears(type, win)) on(win, type, master);
+            else if (hears(type, doc.body)) on(doc.body, type, master);
+        }
+        cxn[type] = server ? function() {
+            //stackoverflow.com/a/15271685/770127
+            //seems to work in node.js but needs tests
+            require('dns').resolve('google.com', resolve);
+            return i == ok;
+        } : function(fn) {
+            typeof fn == 'function' && cxn[wire](type, fn);
+            return (false !== nav[onLine]) == i;
+        };
+        cxn[i ? 'life' : 'gap'] = function() {
+            return cxn[type]() ? (+new Date-since) || 1 : 0;
+        };
+    });
 
-    server || report();
-    cxn[line](report);
+    report();
+    cxn[wire](report);
     return cxn;
 }));
