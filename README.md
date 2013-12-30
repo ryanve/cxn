@@ -11,8 +11,6 @@ $ npm install cxn
 #### `cxn.offline(listener?)` &rArr; `boolean` true if offline
 #### `cxn.line(listener?)` &rArr; `cxn` listen to online and offline
 #### `cxn.unline(listener?)` &rArr; `cxn` unlisten to online and offline
-#### `cxn.wire(event, listener?)` &rArr; `cxn` listen
-#### `cxn.unwire(event, listener?)` &rArr; `cxn` unlisten
 #### `cxn.stable()` &rArr; `boolean` true if initial connection state persists
 #### `cxn.unstable()` &rArr; `number` times connection state changed
 #### `cxn.elapsed()` &rArr; `number` ms since runtime
@@ -22,6 +20,10 @@ $ npm install cxn
 #### `cxn.late()` &rArr; `number` ms to first go online, Infinity if not yet, 0 if started online
 #### `cxn.bandwidth()` &rArr; `number` MB/s (0 if offline)
 #### `cxn.metered()` &rArr; `boolean` true if data usage is metered
+#### `cxn.wire(event, listener?)` &rArr; `cxn` listen
+#### `cxn.unwire(event, listener?)` &rArr; `cxn` unlisten
+#### `cxn.listeners(event)` &rArr; `Array` listeners
+#### `cxn.emit(event)` &rArr; `number` listeners fired
 
 ## CSS
 #### `html[data-cxn]` reports states
