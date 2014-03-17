@@ -1,42 +1,38 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Tests</title>
-    <style>
-        html { font-family:sans-serif; background:#efefef; color:#111 }
-        body { width:96%; margin:auto; font-size:1em; line-height:1.6 }
-        pre, code, kbd { font-family:monospace; -moz-tab-size:4; -o-tab-size:4; tab-size:4 }
-        h3 b { font-weight:700 }
-        h3, pre b { font-weight:400 }
-        pre { padding:0 .5em; white-space:pre-line }
-        pre span { white-space:pre-wrap }
-        pre b { color:#008080 }
-        pre small { font-size:inherit; font-family:inherit; font-weight:lighter; color:#707070 }
-        kbd { display:inline-block; padding:.2em }
-        pre kbd { padding:0 }
-        [data-cxn~="online"] #state:after { content:"state: online"; color:#064 }
-        [data-cxn~="offline"] #state:after { content:"state: offline"; color:#b42 }
-        [data-cxn~="stable"] { border-top:4px solid blue }
-        [data-cxn~="unstable"] { border-top:4px dotted yellow }
-        [data-cxn~="online"] { border-top-color:#064 }
-        [data-cxn~="offline"] { border-top-color:#b42 }
-    </style>
-</head>
-<body>
-    <h1>Tests</h1>
-    <h3><b>Browser:</b> Check tests in the console.</h3>
-    <h3><b>CLI:</b> Run these commands:</h3>
-    <pre>
-        <span><b>$</b> <kbd>cd</kbd> <a href="../">aok</a>       <small># Go to the package root.</small></span>
-        <span><b>$</b> <kbd>npm install</kbd>  <small># Install dependencies.</small></span>
-        <span><b>$</b> <kbd>grunt aok</kbd>    <small># Run tests.</small></span>
-    </pre>
-    <section><b id="state"></b></section>
-    <section>
-        <p>To test the <b>offline</b> event, unplug (disable) your internet connection. To test the <b>online</b> event, do the opposite.</p>
-    </section>
-    <script src="../src/index.js"></script>
-    <script src="../node_modules/aok/aok.min.js"></script>
-    <script src="./index.js"></script>
-</body>
-</html>
+<html lang="en-US">
+<title>Tests</title>
+<style>
+  html { font-family:sans-serif; background:#efefef; color:#111 }
+  body { width:96%; margin:auto; font-size:1em; line-height:1.6 }
+  pre, code, kbd { font-family:monospace; -moz-tab-size:4; -o-tab-size:4; tab-size:4 }
+  h3 b { font-weight:700 }
+  h3, pre b { font-weight:400 }
+  pre { padding:0 .5em; white-space:pre-line }
+  pre span { white-space:pre-wrap }
+  pre b { color:#008080 }
+  pre small { font-size:inherit; font-family:inherit; font-weight:lighter; color:#707070 }
+  kbd { display:inline-block; padding:.2em }
+  pre kbd { padding:0 }
+  [data-cxn~="online"] #state:after { content:"state: online"; color:#064 }
+  [data-cxn~="offline"] #state:after { content:"state: offline"; color:#b42 }
+  [data-cxn~="stable"] { border-top:4px solid blue }
+  [data-cxn~="unstable"] { border-top:4px dotted yellow }
+  [data-cxn~="online"] { border-top-color:#064 }
+  [data-cxn~="offline"] { border-top-color:#b42 }
+</style>
+
+<h1>Tests</h1>
+<h3><b>Browser:</b> Check tests in the console.</h3>
+<h3><b>CLI:</b> Run these commands:</h3>
+<pre>
+  <span><b>$</b> <kbd>cd</kbd> <a href="../">aok</a>     <small># Go to the package root.</small></span>
+  <span><b>$</b> <kbd>npm install</kbd>  <small># Install dependencies.</small></span>
+  <span><b>$</b> <kbd>grunt aok</kbd>  <small># Run tests.</small></span>
+</pre>
+<section><b id="state"></b></section>
+<section>
+  <p>To test the <b>offline</b> event, unplug (disable) your internet connection. To test the <b>online</b> event, do the opposite.</p>
+</section>
+<script src="../src/index.js"></script>
+<script src="../node_modules/aok/aok.min.js"></script>
+<script src="./index.js"></script>
