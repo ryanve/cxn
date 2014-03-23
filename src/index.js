@@ -4,12 +4,15 @@
 }(this, 'cxn', function() {
 
   var cxn = {}
-    , start = +new Date
+    , now = Date.now || function() {
+        return (new Date).getTime();
+      }
+    , start = now()
     , since = start
     , times = 0
     , record = function() {
         times++;
-        since = +new Date;
+        since = now();
       }
     , onLine = 'onLine'
     , server = typeof window == 'undefined'
@@ -153,11 +156,11 @@
   };
   
   cxn['elapsed'] = function() {
-    return +new Date-start;
+    return now()-start;
   };
   
   cxn['interim'] = function() {
-    return +new Date-since;
+    return now()-since;
   };
   
   /**
@@ -189,7 +192,7 @@
     };
 
     cxn[yes ? 'life' : 'gap'] = function() {
-      return cxn[type]() ? (+new Date-since) || 1 : 0;
+      return cxn[type]() ? (now()-since) || 1 : 0;
     };
   });
 
