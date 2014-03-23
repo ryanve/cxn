@@ -35,7 +35,7 @@
     , unwire = 'un' + wire
     , owns = 'hasOwnProperty'
     , clear = function(a) {
-        a.splice(0, a.length);
+        a.length = 0;
       }
     , on = server ? function() {} : function(target, type, fn) {
         if (!(target && ('on' + type) in target)) return 0;
