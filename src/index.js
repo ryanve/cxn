@@ -17,7 +17,6 @@
     , late = false === nav[onLine] ? 1/0 : 0
     , win = !server && window
     , doc = !server && document
-    , listen = 'addEventListener'
     , connection = nav['connection'] || nav['mozConnection'] || false
     , bandwidth = 'bandwidth'
     , metered = 'metered'
@@ -35,22 +34,29 @@
     , clear = function(a) {
         a.splice(0, a.length);
       }
-    , hears = function(event, node) {
-        return !!node && ('on' + event) in node;
+    , on = server ? function() {} : function(target, type, fn) {
+        if (!(target && ('on' + type) in target)) return 0;
+        if (target.addEventListener) target.addEventListener(type, fn, false);
+        else target.attachEvent('on' + type, fn);
+        return 1;
       }
-    , on = win ? listen in win ? function(node, type, fn) {
-        node[listen](type, fn, false);
-      } : function(node, type, fn) {
-        node['attachEvent']('on' + type, fn);
-      } : function() {}
     , ok = true
     , resolve = function(err) { ok = !err; }
     , report = function() {
-      server || document.documentElement.setAttribute('data-cxn', [
-        cxn[online]() ? online : offline
-        , cxn[stable]() ? stable : unstable
-      ].join(' '));
-    };
+        server || document.documentElement.setAttribute('data-cxn', [
+            cxn[online]() ? online : offline
+          , cxn[stable]() ? stable : unstable
+        ].join(' '));
+      };
+    
+  /**
+   * @param {{length:2}} stack
+   * @param {Function} fn
+   */
+  function both(stack, fn) {
+    fn(stack[0], 0);
+    fn(stack[1], 1);
+  }
   
   /**
    * @param {{length:number}} fns
@@ -107,7 +113,9 @@
    * @param {(Function|string|number)=} fn or iteration key
    */
   cxn[unwire] = cxn['unline'] = function(state, fn) {
-    // (state, fn) or (fn, state) unlistens, (fn) unlistens to both, (state) removes all
+    // (state, fn) or (fn, state) unlistens
+    // (fn) unlistens to both
+    // (state) removes all
     var either, type = state, i = 2;
     if (typeof state == 'function') typeof fn == 'string' ? type = fn : either = 1, fn = state;
     if (typeof state == 'string' && typeof fn != 'function') clear(cxn[listeners](state));
@@ -159,28 +167,28 @@
     return late;
   };
   
-  (function(stack, fn) {
-    for (var i = 2; i--;) fn(stack[i], i);
-  })(states, function(type, i) {
-    function master() {
+  both(states, function(type, yes) {
+    //github.com/ryanve/cxn/issues/1
+    on(win, type, delegate) || on(doc.body, type, delegate);
+
+    //github.com/ryanve/cxn/issues/4
+    function delegate() {
       record();
-      i && late == late/0 && (late = (since-start) || 1);
+      yes && late == late/0 && (late = (since-start) || 1);
       cxn[emit](type);
     }
-    if (!server) {
-      if (hears(type, win)) on(win, type, master);
-      else if (hears(type, doc.body)) on(doc.body, type, master);
-    }
+
     cxn[type] = server ? function() {
       //stackoverflow.com/a/15271685/770127
       //seems to work in node.js but needs tests
       require('dns').resolve('google.com', resolve);
-      return i == ok;
+      return yes == ok;
     } : function(fn) {
       typeof fn == 'function' && cxn[wire](type, fn);
-      return (false !== nav[onLine]) == i;
+      return (false !== nav[onLine]) == yes;
     };
-    cxn[i ? 'life' : 'gap'] = function() {
+
+    cxn[yes ? 'life' : 'gap'] = function() {
       return cxn[type]() ? (+new Date-since) || 1 : 0;
     };
   });
