@@ -1,4 +1,4 @@
-(function(root) {
+!function(root) {
   var server = typeof window == 'undefined'
     , aok = server ? require('../node_modules/aok') : root.aok
     , cxn = server ? require('../src') : root.cxn;
@@ -43,4 +43,4 @@
     aok.info('window has ' + type + ' event:', ('on' + type) in window);
     aok.info('<body> has ' + type + ' event:', ('on' + type) in document.body);
   });
-}(this));
+}(this);
