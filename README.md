@@ -1,11 +1,15 @@
-# `=`[cxn](../../)
-#### Network connection JavaScript [module](https://npmjs.org/package/cxn) with online/offline events
+<h1>=<b>cxn</b></h1>
+<b>Network connection JavaScript module with online/offline events</b>
 
 ```sh
-$ npm install cxn
+$ npm install cxn --save
 ```
 
-## API ([0.4](../../releases))
+```js
+var cxn = require('cxn')
+```
+
+## API
 
 #### `cxn.online(listener?)` &rArr; `boolean` true if online
 #### `cxn.offline(listener?)` &rArr; `boolean` true if offline
@@ -26,7 +30,9 @@ $ npm install cxn
 #### `cxn.emit(event)` &rArr; `number` listeners fired
 
 ## CSS
+
 #### `html[data-cxn]` reports states
+
 ```css
 [data-cxn~="stable"] { border-top:4px solid blue }
 [data-cxn~="unstable"] { border-top:4px dotted yellow }
@@ -35,5 +41,4 @@ $ npm install cxn
 ```
 
 ## License
-
-[MIT](http://opensource.org/licenses/MIT)
+[MIT](LICENSE)

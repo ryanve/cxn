@@ -1,11 +1,5 @@
-/*!
- * cxn 0.4.1+201403231655
- * https://github.com/ryanve/cxn
- * MIT License 2014 Ryan Van Etten
- */
-
-(function(root, name, make) {
-  if (typeof module != 'undefined' && module['exports']) module['exports'] = make();
+!function(root, name, make) {
+  if (typeof module != 'undefined' && module.exports) module.exports = make();
   else root[name] = make();
 }(this, 'cxn', function() {
 
@@ -26,7 +20,7 @@
     , late = false === nav[onLine] ? 1/0 : 0
     , win = !server && window
     , doc = !server && document
-    , connection = nav['connection'] || nav['mozConnection'] || false
+    , connection = nav.connection || nav.mozConnection || false
     , bandwidth = 'bandwidth'
     , metered = 'metered'
     , offline = 'offline'
@@ -57,7 +51,7 @@
           , cxn[stable]() ? stable : unstable
         ].join(' '));
       };
-    
+
   /**
    * @param {{length:2}} stack
    * @param {Function} fn
@@ -66,7 +60,7 @@
     fn(stack[0], 0);
     fn(stack[1], 1);
   }
-  
+
   /**
    * @param {{length:number}} fns
    * @param {*=} scope
@@ -76,7 +70,7 @@
     for (var i = 0, l = fns && fns.length; i < l;) fns[i++].call(scope);
     return i;
   }
-  
+
   /**
    * @param {Array} a
    * @param {*=} v value to remove
@@ -86,7 +80,7 @@
     occurrences >>= 0;
     for (var i = a.length; i--;) if (v === a[i] && a.splice(i, 1) && !--occurrences) break;
   }
-  
+
   /**
    * @param {string} type
    * @return {Array} active handlers
@@ -95,7 +89,7 @@
     if (null == type) throw new TypeError('@0');
     return handlers[owns](type) && handlers[type] || (handlers[type] = []);
   };
-  
+
   /**
    * @param {string} type
    * @return {number} fired
@@ -103,7 +97,7 @@
   cxn[emit] = function(type) {
     return calls(cxn[listeners](type), cxn);
   };
-  
+
   /**
    * @param {string|Function} state
    * @param {(Function|string|number)=} fn or iteration key
@@ -116,7 +110,7 @@
     else while (i--) if (either || states[i] === type) cxn[listeners](states[i]).push(fn);
     return this;
   };
-  
+
   /**
    * @param {string|Function} state
    * @param {(Function|string|number)=} fn or iteration key
@@ -139,43 +133,43 @@
     var n = connection;
     return n && (n = n[bandwidth]) === +n ? n : cxn[offline]() ? 0 : 1/0;
   };
-  
+
   /**
    * @return {boolean}
    */
   cxn[metered] = function() {
     return connection ? true === connection[metered] : false;
   };
-  
+
   /**
    * @return {number} times
    */
   cxn[unstable] = function() {
     return times;
   };
-  
+
   /**
    * @return {boolean} true if initial state persists
    */
   cxn[stable] = function() {
     return !times;
   };
-  
+
   cxn['elapsed'] = function() {
     return now()-start;
   };
-  
+
   cxn['interim'] = function() {
     return now()-since;
   };
-  
+
   /**
    * @return {number} ms to first go online, Infinity if not yet, 0 if started online
    */
   cxn['late'] = function() {
     return late;
   };
-  
+
   both(states, function(type, yes) {
     //github.com/ryanve/cxn/issues/1
     on(win, type, delegate) || on(doc.body, type, delegate);
@@ -205,4 +199,4 @@
   report();
   cxn[wire](report);
   return cxn;
-}));
+});
