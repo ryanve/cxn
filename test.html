@@ -2,22 +2,22 @@
 <html lang="en-US">
 <title>Tests</title>
 <style>
-  html { font-family: sans-serif; background: #efefef; color: #111 }
+  html { font-family: sans-serif; background: ghostwhite; color: #333 }
   body { width: 96%; margin: auto; font-size: 1em; line-height: 1.6 }
-  [data-cxn~="online"] #state { color: #064 }
-  [data-cxn~="offline"] #state { color: #b42 }
+  [data-cxn~="online"] #state { color: seagreen }
+  [data-cxn~="offline"] #state { color: tomato }
   [data-cxn~="online"] #state:after { content: " online" }
   [data-cxn~="offline"] #state:after { content: " offline" }
   [data-cxn~="stable"] { border-top: 4px solid blue }
   [data-cxn~="unstable"] { border-top: 4px dotted yellow }
-  [data-cxn~="online"] { border-top-color: #064 }
-  [data-cxn~="offline"] { border-top-color: #b42 }
+  [data-cxn~="online"] { border-top-color: seagreen }
+  [data-cxn~="offline"] { border-top-color: tomato }
 </style>
 
 <h1>Tests</h1>
 <p>Open the console to view test results
 <p><b id="state">state:</b>
-<p>To test the <b>offline</b> event, unplug (disable) your internet connection. To test the <b>online</b> event, do the opposite.
+<p>To test the <b>offline</b> event, unplug or disable your internet connection. To test the <b>online</b> event, do the opposite.
 
 <script src="cxn.js"></script>
 <script src="node_modules/aok/aok.min.js"></script>
