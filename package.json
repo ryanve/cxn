@@ -7,13 +7,14 @@
   "author": "Ryan Van Etten",
   "keywords": [
     "connection",
+    "detection",
+    "network",
     "offline",
     "online",
-    "ux",
-    "network",
-    "detection",
+    "detect",
     "browser",
-    "ender"
+    "ender",
+    "ux"
   ],
   "main": "./cxn.js",
   "scripts": {
