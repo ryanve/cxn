@@ -5,7 +5,7 @@
 $ npm install cxn
 ```
 
-## API ([0.4](../../releases))
+## API
 
 #### `cxn.online(listener?)` &rArr; `boolean` true if online
 #### `cxn.offline(listener?)` &rArr; `boolean` true if offline

@@ -1,21 +1,47 @@
 {
   "name": "cxn",
   "description": "Network connection module with online/offline events",
-  "version": "0.4.1",
+  "version": "0.5.0-0",
   "homepage": "https://github.com/ryanve/cxn",
   "license": "MIT",
   "author": "Ryan Van Etten",
-  "keywords": ["connection", "offline", "online", "ux", "network", "detection", "browser", "ender"],
+  "keywords": [
+    "connection",
+    "offline",
+    "online",
+    "ux",
+    "network",
+    "detection",
+    "browser",
+    "ender"
+  ],
   "main": "./cxn.js",
+  "scripts": {
+    "lint": "jshint cxn.js && jshint test.js",
+    "test": "npm run lint && node test.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ryanve/cxn.git"
   },
   "devDependencies": {
-    "aok": "~1.8.1",
-    "grunt": "~0.4.4",
-    "grunt-contrib-uglify": "~0.4.0",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-jshint": "~0.9.0"
+    "jshint": "^2.9.3",
+    "aok": "^1.9.0"
+  },
+  "jshintConfig": {
+    "asi": false,
+    "boss": true,
+    "browser": true,
+    "eqnull": true,
+    "expr": true,
+    "latedef": "nofunc",
+    "laxcomma": true,
+    "maxerr": 5,
+    "node": true,
+    "sub": true,
+    "supernew": true,
+    "undef": true,
+    "unused": true,
+    "-W018": false
   }
 }
