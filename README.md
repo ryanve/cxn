@@ -36,4 +36,4 @@ $ npm install cxn
 
 ## License
 
-[MIT](http://opensource.org/licenses/MIT)
+[MIT](LICENSE)
