@@ -26,6 +26,9 @@
     "type": "git",
     "url": "https://github.com/ryanve/cxn.git"
   },
+  "bugs": {
+    "url": "https://github.com/ryanve/cxn/issues"
+  },
   "devDependencies": {
     "jshint": "^2.9.3",
     "aok": "^1.9.0"
