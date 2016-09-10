@@ -1,7 +1,7 @@
 {
   "name": "cxn",
   "description": "Network connection module with online/offline events",
-  "version": "0.5.0-0",
+  "version": "0.5.0",
   "homepage": "https://github.com/ryanve/cxn",
   "license": "MIT",
   "author": "Ryan Van Etten",
