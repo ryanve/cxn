@@ -23,7 +23,8 @@
     "vendor": "browserify -r aok -o vendor.js",
     "prestart": "npm update",
     "start": "npm run vendor",
-    "test": "npm run lint && node test.js"
+    "pretest": "npm run lint",
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
