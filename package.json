@@ -1,7 +1,7 @@
 {
   "name": "cxn",
   "description": "Network connection module with online/offline events",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "homepage": "https://github.com/ryanve/cxn",
   "license": "MIT",
   "author": "Ryan Van Etten",
@@ -20,7 +20,11 @@
   "main": "./cxn.js",
   "scripts": {
     "lint": "jshint cxn.js && jshint test.js",
-    "test": "npm run lint && node test.js"
+    "vendor": "browserify -r aok -o vendor.js",
+    "prestart": "npm update",
+    "start": "npm run vendor",
+    "pretest": "npm run lint",
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
@@ -30,8 +34,9 @@
     "url": "https://github.com/ryanve/cxn/issues"
   },
   "devDependencies": {
-    "jshint": "^2.9.3",
-    "aok": "^1.9.0"
+    "aok": "^1.9.0",
+    "browserify": "^13.1.1",
+    "jshint": "^2.9.3"
   },
   "jshintConfig": {
     "asi": false,

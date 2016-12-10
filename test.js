@@ -1,6 +1,6 @@
 !function(root) {
   var server = typeof window == 'undefined';
-  var aok = server ? require('aok') : root.aok;
+  var aok = require('aok');
   var cxn = server ? require('./') : root.cxn;
 
   aok({ id:'.online', test: cxn.online() === !cxn.offline() });

@@ -39,6 +39,3 @@ var cxn = require('cxn')
 [data-cxn~="online"] { border-top-color:green }
 [data-cxn~="offline"] { border-top-color:red }
 ```
-
-## License
-[MIT](LICENSE)
