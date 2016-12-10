@@ -20,6 +20,9 @@
   "main": "./cxn.js",
   "scripts": {
     "lint": "jshint cxn.js && jshint test.js",
+    "vendor": "browserify -r aok -o vendor.js",
+    "prestart": "npm update",
+    "start": "npm run vendor",
     "test": "npm run lint && node test.js"
   },
   "repository": {
@@ -30,8 +33,9 @@
     "url": "https://github.com/ryanve/cxn/issues"
   },
   "devDependencies": {
-    "jshint": "^2.9.3",
-    "aok": "^1.9.0"
+    "aok": "^1.9.0",
+    "browserify": "^13.1.1",
+    "jshint": "^2.9.3"
   },
   "jshintConfig": {
     "asi": false,
