@@ -1,6 +1,12 @@
 <h1>=<b>cxn</b></h1>
 <b>Network connection JavaScript module with online/offline events</b>
 
+- [Live Demo](http://ryanve.github.io/cxn/)
+- [API](#api)
+- [CSS](#css)
+
+## Setup
+
 ```sh
 $ npm install cxn --save
 ```

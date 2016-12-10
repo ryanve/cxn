@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<title>cxn</title>
+<meta name=viewport content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Network connection JavaScript module with online/offline events">
+
+<style>
+  html { background: ghostwhite; color: black }
+  .button { background: black; color: ghostwhite }
+  section { background: black; color: ghostwhite }
+
+
+  *, :before, :after { box-sizing: border-box }
+  html { font: 1em/2 sans-serif; }
+  body { width: 100%; margin: auto; padding: 1em }
+  a { text-decoration: none }
+  a:hover { text-decoration: underline }
+  code { font-family: inherit; font-weight: bold }
+  pre { white-space: pre-wrap; word-wrap: break-word; overflow: auto }
+  header { display: block }
+  h1, h2, h3 { line-height: 1; margin-top: .5em }
+
+  [data-cxn~="online"] #state { color: LimeGreen }
+  [data-cxn~="offline"] #state { color: tomato }
+  [data-cxn~="online"] #state:after { content: " online" }
+  [data-cxn~="offline"] #state:after { content: " offline" }
+  [data-cxn~="stable"] { border-top: 5px solid blue }
+  [data-cxn~="unstable"] { border-top: 5px dotted yellow }
+  [data-cxn~="online"] { border-top-color: LimeGreen }
+  [data-cxn~="offline"] { border-top-color: tomato }
+
+  .button {
+    display: inline-block;
+    padding: .2em .5em;
+    margin: 0;
+    font-weight: bold;
+  }
+
+  section {
+    padding: .8em;
+  }
+
+  .m-t-0 {
+    margin-top: 0;
+  }
+
+  .m-b-0 {
+    margin-bottom: 0;
+  }
+
+  .m-b-1 {
+    margin-bottom: 1em;
+  }
+
+  .m-b-2 {
+    margin-bottom: 2em;
+  }
+
+  .display-block {
+    display: block;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+</style>
+
+<header class="m-b-2">
+  <h1 class="m-b-0">cxn</h1>
+  <p class="bold m-t-0">Network connection JavaScript module with online/offline events</p>
+  <a class="button" href="https://github.com/ryanve/cxn">Github</a>
+  <a class="button" href="https://www.npmjs.com/package/cxn">npm</a>
+  <a class="button" href="https://github.com/ryanve/cxn#readme">Documentation</a>
+</header>
+
+<section class="m-b-2">
+  <h2>Live Output</h2>
+  <p><b id="state">state:</b>
+  <p>To test the <b>offline</b> event, unplug or disable your internet connection.
+  <br>To test the <b>online</b> event, do the opposite.
+  <p>Open the console to play with <code>cxn</code> in the browser.
+</section>
+
+<script src="cxn.js"></script>
+<script src="vendor.js"></script>
+<script src="test.js"></script>
